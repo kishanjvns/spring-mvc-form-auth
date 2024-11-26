@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class SecurityDaoImpl extends NamedParameterJdbcDaoSupport implements SecurityDao {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityDaoImpl.class);
@@ -32,6 +31,11 @@ public class SecurityDaoImpl extends NamedParameterJdbcDaoSupport implements Sec
     static final String QUERY_FOR_USER_ROLE_GROUPS = "SELECT distinct 1 FROM Groups as g INNER JOIN User_Group as ug on ug.group_id = g.group_id" +
             " INNER JOIN UserCredentials uc on uc.user_credentials_id = ug.user_id INNER JOIN Users u on uc.user_id = u.user_id where g.obsolete = 0 and g.disabled = 0 and u.username = :" + USER_NAME;
     static final String NAMED_PARAMETER_EXCEPTION_MESSAGE = "NamedParameterJdbcTemplate cannot be null";
+
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public SecurityDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public SecurityUser findUserByUsername(final String username) {
