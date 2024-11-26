@@ -1,17 +1,21 @@
-package com.example.config;
+package com.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourceConfig {
-    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
-    public DataSourceConfig() {
+//@ComponentScan
+@ComponentScan(excludeFilters={@ComponentScan.Filter(org.springframework.stereotype.Controller.class)})
+public class AppConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(AppConfig.class);
+    public AppConfig() {
         log.info("DataSourceConfig class picked <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 
