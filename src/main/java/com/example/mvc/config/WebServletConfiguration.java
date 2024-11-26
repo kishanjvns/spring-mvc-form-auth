@@ -1,29 +1,24 @@
-package com.example.security.config;
-import com.example.config.AppConfig;
+package com.example.mvc.config;
+
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-
-public class AppInitializer implements WebApplicationInitializer {
-
-
+public class WebServletConfiguration implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(jakarta.servlet.ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext container) throws ServletException {
         AnnotationConfigWebApplicationContext ctx
                 = new AnnotationConfigWebApplicationContext();
-        ctx.register(WebMvcConfig.class);
-        ctx.scan("com.example");
-      //  ctx.register(AppConfig.class);
-        ctx.setServletContext(servletContext);
+        ctx.register(SpringConfig.class);
+        ctx.setServletContext(container);
 
-        ServletRegistration.Dynamic servlet = servletContext.addServlet(
+        ServletRegistration.Dynamic servlet = container.addServlet(
                 "dispatcherExample", new DispatcherServlet(ctx));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
     }
 }
-
